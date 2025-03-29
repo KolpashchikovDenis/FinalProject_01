@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
@@ -12,11 +11,13 @@ public class Main {
         showMainMenu();
         while(code != 3) {
             code = scanner.nextInt();
+            scanner.nextLine();
             switch (code) {
                 case 1:
                     System.out.print("Введите выражение: ");
                     expression = scanner.nextLine();
-                    parseExpression(expression);
+                    lastResult = String.valueOf(parseExpression(expression));
+                    System.out.printf("Результат: %s\n", lastResult);
                     code = 0;
                     continue;
 
@@ -26,35 +27,66 @@ public class Main {
                     if( lastResult.length()==0){
                         System.out.println("Недоступно!");
                     } else {
+                        System.out.print("Введите число: ");
+                        int a = scanner.nextInt();
+                        String e = "";
                         switch(subCode){
                             case 1:
-                                break;
+                                e = String.format("%s + %d", lastResult, a);
+                                lastResult = String.valueOf(sum(e));
+                                System.out.printf("результат: %s\n\n");
+                                showMainMenu();
+                                continue;
 
                             case 2:
-                                break;
+                                e = String.format("%s + %d", lastResult, a);
+                                lastResult = String.valueOf(sum(e));
+                                System.out.printf("результат: %s\n\n");
+                                showMainMenu();
+                                continue;
 
                             case 3:
-                                break;
+                                e = String.format("%s + %d", lastResult, a);
+                                lastResult = String.valueOf(sum(e));
+                                System.out.printf("результат: %s\n\n");
+                                showMainMenu();
+                                continue;
 
                             case 4:
-                                break;
+                                e = String.format("%s + %d", lastResult, a);
+                                lastResult = String.valueOf(sum(e));
+                                System.out.printf("результат: %s\n\n");
+                                showMainMenu();
+                                continue;
 
                             case 5:
-                                break;
+                                e = String.format("%s + %d", lastResult, a);
+                                lastResult = String.valueOf(sum(e));
+                                System.out.printf("результат: %s\n\n");
+                                showMainMenu();
+                                continue;
 
                             case 6:
-                                break;
+                                e = String.format("%s + %d", lastResult, a);
+                                lastResult = String.valueOf(sum(e));
+                                System.out.printf("результат: %s\n\n");
+                                showMainMenu();
+                                continue;
 
                             case 7:
-                                break;
+                                e = String.format("%s + %d", lastResult, a);
+                                lastResult = String.valueOf(sum(e));
+                                System.out.printf("результат: %s\n\n");
+                                showMainMenu();
+                                continue;
 
                             case 0:
+                                showMainMenu();
+                                continue;
                         }
                     }
-                    subCode = -1;
-                    continue;
 
-                case 3:
+                case 3: return;
             }
         }
 
@@ -77,37 +109,80 @@ public class Main {
         System.out.println("0. Назад");
     }
 
-    public static void parseExpression(String expr){
-
+    public static double parseExpression(String expression){
+        if(expression.contains("+")){
+            return sum(expression);
+        } else if (expression.contains("-")){
+            return diff(expression);
+        } else if (expression.contains("/")){
+            return div(expression);
+        } else if (expression.contains("*")){
+            return mul(expression);
+        } else if (expression.contains("^")){
+            return power(expression);
+        } else if (expression.contains("!")){
+            return factorial(expression);
+        } else if (expression.contains("?")){
+            return equal(expression);
+        } else {
+            return 0;
+        }
     }
 
-    public static int sum(String a, String b){
-
-        return 0;
+    public static int sum(String e){
+        String[] st = e.replaceAll("\\s+", "").split("\\+");
+        int a = Integer.parseInt(st[0]);
+        int b = Integer.parseInt(st[1]);
+        return a + b;
     }
 
-    public static int diff(String a, String b){
-
-        return 0;
+    public static int diff(String e){
+        String[] st = e.replaceAll("\\s+", "").split("-");
+        int a = Integer.parseInt(st[0]);
+        int b = Integer.parseInt(st[1]);
+        return a - b;
     }
 
-    public static int mul(String a, String b){
-
-        return 0;
+    public static int mul(String e){
+        String[] st = e.replaceAll("\\s+", "").split("\\*");
+        int a = Integer.parseInt(st[0]);
+        int b = Integer.parseInt(st[1]);
+        return a * b;
     }
 
-    public static int div(String a, String b){
-
-        return 0;
+    public static double div(String e){
+        String[] st = e.replaceAll("\\s+", "").split("/");
+        int a = Integer.parseInt(st[0]);
+        int b = Integer.parseInt(st[1]);
+        return (double)(a / b);
     }
 
-    public static int power(String a, String b){
-
-        return 0;
+    public static double power(String e){
+        String[] st = e.replaceAll("\\s+", "").split("\\^");
+        int a = Integer.parseInt(st[0]);
+        int b = Integer.parseInt(st[1]);
+        return Math.pow(a, b);
     }
 
-    public static int equal(String a, String b){
-
-        return 0;
+    public static double equal(String e){
+        String[] st = e.replaceAll("\\s+", "").split("\\?");
+        int a = Integer.parseInt(st[0]);
+        int b = Integer.parseInt(st[1]);
+        return a == b ? 1.0 : 0.0;
     }
+
+    public static int factorial(String e){
+        String[] st = e.replaceAll("\\s+", "").split("!");
+        int a = Integer.parseInt(st[0]);
+        return fctrl(a);
+    }
+
+    public static int fctrl(int a){
+        if((a == 0) || (a == 1)){
+            return 1;
+        }
+
+        return a * fctrl(--a);
+    }
+
 }
